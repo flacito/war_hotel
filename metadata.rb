@@ -1,0 +1,7 @@
+name 'war_hotel'
+maintainer 'Brian Webb'
+maintainer_email 'btwebb@gmail.com'
+license 'apachev2'
+description 'Installs/Configures war_hotel'
+long_description 'Installs/Configures war_hotel'
+version '0.1.0'
