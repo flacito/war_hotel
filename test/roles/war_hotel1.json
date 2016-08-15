@@ -1,0 +1,84 @@
+{
+    "name": "war_hotel1",
+    "description": "BB&T Web ARchive Hotel role for Hotel #1.",
+    "chef_type": "role",
+    "json_class": "Chef::Role",
+    "override_attributes": {
+      "war_hotel": {
+        "is_functional_test": true,
+        "id":"bbt_war_hotel1",
+        "instances": [
+          {
+            "id": "test-instance1",
+            "docker_image": "tomcat:alpine",
+            "tomcat": {
+              "https_port":10443,
+              "http_port":10080,
+              "jmx_port":10099,
+              "env": {
+                "artifact_id":"test-instance1-env",
+                "group_id":"com.bbt.bcb",
+                "version": "1.0.0"
+              },
+              "conf": {
+                "artifact_id":"test-instance1-conf",
+                "group_id":"com.bbt.bcb",
+                "version": "1.0.0"
+              },
+              "lib": {
+                "artifact_id":"test-instance1-lib",
+                "group_id":"com.bbt.bcb",
+                "version": "1.0.0"
+              }
+            },
+            "wars": [
+              {
+                "artifact_id":"test-instance1-war1",
+                "group_id":"com.bbt.bcb",
+                "version": "1.0.0",
+                "smoke_test_commands": [
+                  {
+                    "command": "curl -f http://localhost:10080/test-instance1-war1",
+                    "expected_return_code": 0
+                  },
+                  {
+                    "command": "curl -L  http://localhost:10080/test-instance1-war1 | grep \"test-instance1-war1 v1.0.0\"",
+                    "expected_return_code": 0
+                  }
+                ]
+              },
+              {
+                "artifact_id":"test-instance1-war2",
+                "group_id":"com.bbt.bcb",
+                "version": "1.0.0",
+                "smoke_test_commands": [
+                  {
+                    "command": "curl -f http://localhost:10080/test-instance1-war3",
+                    "expected_return_code": 0
+                  }
+                ]
+              },
+              {
+                "artifact_id":"test-instance1-war3",
+                "group_id":"com.bbt.bcb",
+                "version": "2.0.0",
+                "smoke_test_commands": [
+                  {
+                    "command": "curl -f http://localhost:10080/test-instance1-war3",
+                    "expected_return_code": 0
+                  },
+                  {
+                    "command": "curl -L  http://localhost:10080/test-instance1-war3 | grep \"test-instance1-war3 v2.0.0\"",
+                    "expected_return_code": 0
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "run_list": [
+        "recipe[war_hotel::default]"
+    ]
+}

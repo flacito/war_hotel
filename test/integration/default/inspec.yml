@@ -1,0 +1,10 @@
+name: war_hotel_inspec_profile
+title: WAR Hotel Inspec Profile
+maintainer: Brian Webb
+copyright: Brian Webb
+copyright_email: btwebb@gmail.com
+license: All Rights Reserved
+summary: Audits a WAR Hotel Server
+version: 1.0.0
+supports:
+  - os-family: unix

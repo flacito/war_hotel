@@ -5,3 +5,8 @@ license 'apachev2'
 description 'Installs/Configures war_hotel'
 long_description 'Installs/Configures war_hotel'
 version '0.1.0'
+
+depends 'yum'
+depends 'java'
+depends 'maven'
+depends 'patch'
