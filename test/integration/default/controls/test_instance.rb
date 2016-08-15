@@ -1,4 +1,4 @@
-# require 'test_war'
+require 'test_war'
 
 def test_instance (instance)
   instances_directory = '/opt/war_hotel_manager'
@@ -41,21 +41,21 @@ def test_instance (instance)
 
   end
 
-  # instance['wars'].each do |war|
-  #   test_war instance, war
-  # end
+  instance['wars'].each do |war|
+    test_war instance, war
+  end
 
-  # control "No ROOT webapp installed for #{instance['id']}" do
-  #   impact 1.0
-  #   title "Instance #{instance['id']} must not have the ROOT web application installed"
-  #
-  #   describe file("#{instances_directory}/#{instance['id']}/webapps/ROOT") do
-  #     it { should_not be_directory }
-  #   end
-  #
-  #   describe command("curl -s -o /dev/null -w \"%{http_code}\" http://localhost:#{instance['tomcat']['http_port']}") do
-  #     its('stdout') { should eq '404' }
-  #   end
-  # end
+  control "No ROOT webapp installed for #{instance['id']}" do
+    impact 1.0
+    title "Instance #{instance['id']} must not have the ROOT web application installed"
+
+    describe file("#{instances_directory}/#{instance['id']}/webapps/ROOT") do
+      it { should_not be_directory }
+    end
+
+    describe command("curl -s -o /dev/null -w \"%{http_code}\" http://localhost:#{instance['tomcat']['http_port']}") do
+      its('stdout') { should eq '404' }
+    end
+  end
 
 end

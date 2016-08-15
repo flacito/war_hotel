@@ -10,6 +10,7 @@
         "instances": [
           {
             "id": "test-instance1",
+            "version": "1.0.0",
             "docker_image": "tomcat:alpine",
             "tomcat": {
               "https_port":10443,

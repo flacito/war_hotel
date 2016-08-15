@@ -3,7 +3,7 @@ resource_name :hotel_instance
 actions :run
 
 attribute :image_name, :name_attribute => true, :kind_of => String
-attribute :image_tag, :name_attribute => false, :kind_of => String
+attribute :version, :name_attribute => false, :kind_of => String
 attribute :container_name, :name_attribute => true, :kind_of => String
 attribute :cwd, :required => true, :name_attribute => false, :kind_of => String
 attribute :https_port, :required => true, :kind_of => Integer
@@ -13,20 +13,21 @@ attribute :jmx_port, :required => true, :kind_of => Integer
 action :build do
 
   name = new_resource.name
-  if (new_resource.image_tag)
-    name = "#{name}:#{image_tag}"
+  if (new_resource.version)
+    name = "#{name}:#{version}"
   end
 
   execute "docker build -t #{name} ." do
     cwd new_resource.cwd
+    not_if { not "docker inspect #{new_resource.image_name}:#{new_resource.version}" }
   end
 end
 
 action :run do
 
   name = new_resource.name
-  if (new_resource.image_tag)
-    name = "#{name}:#{image_tag}"
+  if (new_resource.version)
+    name = "#{name}:#{new_resource.version}"
   end
 
   execute "docker run -d --name #{new_resource.container_name} \
@@ -37,6 +38,25 @@ action :run do
             -v #{new_resource.cwd}/logs:/usr/local/tomcat/logs \
             #{name}" do
     cwd new_resource.cwd
-    not_if "docker inspect #{new_resource.image_name}"
+    not_if "docker ps -all | grep #{new_resource.image_name} | grep #{new_resource.version}"
   end
+
+  # wait for 5 seconds for the WARs to extract (so our integration tests don't fail)
+  ruby_block 'wait for WAR' do
+    block do
+      retry_count = 0
+
+      while (not system("curl -I http://localhost:#{new_resource.http_port}"))
+        sleep(1)
+        Chef::Log.warn("#{new_resource.image_name} is not online yet: retry #{retry_count+1}")
+        retry_count = retry_count + 1
+
+        if (retry_count > 60)
+          Chef::Application.fatal!("Instance failed to deploy: instance_id=#{new_resource.image_name}")
+        end
+      end
+    end
+    action :run
+  end
+
 end
