@@ -18,6 +18,8 @@ node['war_hotel']['instances'].each do |instance|
       execute "run smoke test command #{smoker['command']} == #{smoker['expected_return_code']}" do
         command smoker['command']
         returns smoker['expected_return_code']
+        retries 7
+        retry_delay 3
       end
     end
 

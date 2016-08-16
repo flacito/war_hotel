@@ -10,9 +10,9 @@ def test_war (instance, war)
     end
   end
 
-  control "tc Server process(es) #{instance['id']}, #{war['artifact_id']}" do
+  control "Tomcat process #{instance['id']}, #{war['artifact_id']}" do
     impact 1.0
-    title "Instance #{instance['id']} tc Server process is running"
+    title "Instance #{instance['id']} Tomcat process is running"
 
     describe processes('java') do
       its('users') { should eq ['root'] }
@@ -23,7 +23,7 @@ def test_war (instance, war)
     end
   end
 
-  control "tc Server web sites(s) #{instance['id']}, #{war['artifact_id']}" do
+  control "Tomcat web sites #{instance['id']}, #{war['artifact_id']}" do
     impact 1.0
     title "The WAR, #{war['artifact_id']}, in tc instance #{instance['id']} is operating properly"
 

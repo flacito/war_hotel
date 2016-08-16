@@ -2,7 +2,7 @@
 #
 # The purpose of this file is to prototype a new way to execute
 # phases locally on your workstation. The delivery-cli will read
-# this file and execute the command(s) that are configured for
+# this file and execute the command that are configured for
 # each phase. You can customize them by just modifying the phase
 # key on this file.
 #

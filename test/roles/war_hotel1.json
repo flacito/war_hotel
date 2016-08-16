@@ -54,7 +54,7 @@
                 "version": "1.0.0",
                 "smoke_test_commands": [
                   {
-                    "command": "curl -f http://localhost:10080/test-instance1-war3",
+                    "command": "curl -f http://localhost:10080/test-instance1-war2",
                     "expected_return_code": 0
                   }
                 ]
@@ -62,14 +62,150 @@
               {
                 "artifact_id":"test-instance1-war3",
                 "group_id":"com.bbt.bcb",
-                "version": "2.0.0",
+                "version": "1.0.0",
                 "smoke_test_commands": [
                   {
                     "command": "curl -f http://localhost:10080/test-instance1-war3",
                     "expected_return_code": 0
                   },
                   {
-                    "command": "curl -L  http://localhost:10080/test-instance1-war3 | grep \"test-instance1-war3 v2.0.0\"",
+                    "command": "curl -L  http://localhost:10080/test-instance1-war3 | grep \"test-instance1-war3 v1.0.0\"",
+                    "expected_return_code": 0
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "test-instance2",
+            "version": "1.0.0",
+            "docker_image": "tomcat:alpine",
+            "tomcat": {
+              "https_port":11443,
+              "http_port":11080,
+              "jmx_port":11099,
+              "env": {
+                "artifact_id":"test-instance2-env",
+                "group_id":"com.bbt.bcb",
+                "version": "1.0.0"
+              },
+              "conf": {
+                "artifact_id":"test-instance2-conf",
+                "group_id":"com.bbt.bcb",
+                "version": "1.0.0"
+              },
+              "lib": {
+                "artifact_id":"test-instance2-lib",
+                "group_id":"com.bbt.bcb",
+                "version": "1.0.0"
+              }
+            },
+            "wars": [
+              {
+                "artifact_id":"test-instance2-war1",
+                "group_id":"com.bbt.bcb",
+                "version": "1.0.0",
+                "smoke_test_commands": [
+                  {
+                    "command": "curl -f http://localhost:11080/test-instance2-war1",
+                    "expected_return_code": 0
+                  },
+                  {
+                    "command": "curl -L  http://localhost:11080/test-instance2-war1 | grep \"test-instance2-war1 v1.0.0\"",
+                    "expected_return_code": 0
+                  }
+                ]
+              },
+              {
+                "artifact_id":"test-instance2-war2",
+                "group_id":"com.bbt.bcb",
+                "version": "1.0.0",
+                "smoke_test_commands": [
+                  {
+                    "command": "curl -f http://localhost:11080/test-instance2-war2",
+                    "expected_return_code": 0
+                  }
+                ]
+              },
+              {
+                "artifact_id":"test-instance2-war3",
+                "group_id":"com.bbt.bcb",
+                "version": "2.0.0",
+                "smoke_test_commands": [
+                  {
+                    "command": "curl -f http://localhost:11080/test-instance2-war3",
+                    "expected_return_code": 0
+                  },
+                  {
+                    "command": "curl -L  http://localhost:11080/test-instance2-war3 | grep \"test-instance2-war3 v2.0.0\"",
+                    "expected_return_code": 0
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "test-instance3",
+            "version": "1.0.0",
+            "docker_image": "tomcat:alpine",
+            "tomcat": {
+              "https_port":12443,
+              "http_port":12080,
+              "jmx_port":12099,
+              "env": {
+                "artifact_id":"test-instance3-env",
+                "group_id":"com.bbt.bcb",
+                "version": "1.0.0"
+              },
+              "conf": {
+                "artifact_id":"test-instance3-conf",
+                "group_id":"com.bbt.bcb",
+                "version": "1.0.0"
+              },
+              "lib": {
+                "artifact_id":"test-instance3-lib",
+                "group_id":"com.bbt.bcb",
+                "version": "1.0.0"
+              }
+            },
+            "wars": [
+              {
+                "artifact_id":"test-instance3-war1",
+                "group_id":"com.bbt.bcb",
+                "version": "1.0.0",
+                "smoke_test_commands": [
+                  {
+                    "command": "curl -f http://localhost:12080/test-instance3-war1",
+                    "expected_return_code": 0
+                  },
+                  {
+                    "command": "curl -L  http://localhost:12080/test-instance3-war1 | grep \"test-instance3-war1 v1.0.0\"",
+                    "expected_return_code": 0
+                  }
+                ]
+              },
+              {
+                "artifact_id":"test-instance3-war2",
+                "group_id":"com.bbt.bcb",
+                "version": "1.0.0",
+                "smoke_test_commands": [
+                  {
+                    "command": "curl -f http://localhost:12080/test-instance3-war2",
+                    "expected_return_code": 0
+                  }
+                ]
+              },
+              {
+                "artifact_id":"test-instance3-war3",
+                "group_id":"com.bbt.bcb",
+                "version": "1.0.0",
+                "smoke_test_commands": [
+                  {
+                    "command": "curl -f http://localhost:12080/test-instance3-war3",
+                    "expected_return_code": 0
+                  },
+                  {
+                    "command": "curl -L  http://localhost:12080/test-instance3-war3 | grep \"test-instance3-war3 v1.0.0\"",
                     "expected_return_code": 0
                   }
                 ]
