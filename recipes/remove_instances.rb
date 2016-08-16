@@ -17,7 +17,6 @@ ruby_block 'remove WARs not in role' do
     require 'fileutils'
     require "pathname"
 
-
     # Loop over the children of the instances
     Pathname.new(node['war_hotel']['instances_directory']).children.select { |instance_dir|
       Chef::Log.warn(role_instances)
@@ -28,6 +27,7 @@ ruby_block 'remove WARs not in role' do
         Chef::Log.warn("role_instances.has_key?(instance_dir.basename.to_s) == #{role_instances.has_key?(instance_dir.basename.to_s)}")
         if not role_instances.has_key?(instance_dir.basename.to_s)
           Chef::Log.warn("Deleting #{instance_dir.basename}")
+          system "sudo docker ps -a | awk '{ print $1,$2 }' | grep #{instance_dir.basename} | awk '{print $1 }' | xargs -I {} sudo docker rm -f {} | awk '{print $2 }' | xargs -I {} sudo docker rmi -f {}"
           FileUtils.remove_dir(sc)
         # instance should still be there, but maybe the webapps not
         else
