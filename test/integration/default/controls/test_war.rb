@@ -31,4 +31,17 @@ def test_war (instance, war)
       its('stdout') { should match /HTTP\/1.1 200 OK/ }
     end
   end
+
+  control "Delete WARs in instance #{instance['id']}" do
+    impact 1.0
+    title "The WAR, deleteme, in tc instance #{instance['id']} should not be there"
+
+    describe file("#{instances_directory}/#{instance['id']}/webapps/deleteme") do
+      it { should_not be_directory }
+    end
+
+    describe command("curl -I http://localhost:#{instance['tomcat']['http_port']}/deleteme/index.jsp") do
+      its('stdout') { should_not match /HTTP\/1.1 200 OK/ }
+    end
+  end
 end

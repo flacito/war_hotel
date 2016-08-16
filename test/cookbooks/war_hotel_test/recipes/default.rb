@@ -1,3 +1,8 @@
+include_recipe 'war_hotel::install_java'
+include_recipe 'maven'
+include_recipe 'war_hotel::setup_users'
+include_recipe 'war_hotel::install_docker'
+
 instance = {
   "id" => "deleteme",
   "version" => "1.0.0",
