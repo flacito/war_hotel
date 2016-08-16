@@ -1,0 +1,5 @@
+source 'https://supermarket.chef.io'
+
+cookbook 'war_hotel', path: 'test/cookbooks/war_hotel'
+
+metadata

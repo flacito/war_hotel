@@ -5,6 +5,9 @@ driver:
 provisioner:
   name: chef_zero
   roles_path: 'test/roles'
+  environments_path: test/environments
+  client_rb:
+    environment: test_environment
 
 verifier:
   name: inspec

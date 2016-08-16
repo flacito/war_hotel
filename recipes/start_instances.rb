@@ -2,15 +2,9 @@
 # for each instance
 node['war_hotel']['instances'].each do |instance|
 
-  # Create the instance container image
-  hotel_instance instance['id'] do
-    version instance['version']
-    cwd "#{node['war_hotel']['instances_directory']}/#{instance['id']}"
-    action :build
-  end
-
   # Start the instance container image
   hotel_instance instance['id'] do
+    version instance['version']
     cwd "#{node['war_hotel']['instances_directory']}/#{instance['id']}"
     https_port instance['tomcat']['https_port']
     http_port instance['tomcat']['http_port']

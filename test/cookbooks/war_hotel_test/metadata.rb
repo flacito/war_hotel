@@ -1,0 +1,13 @@
+name 'war_hotel_test'
+maintainer 'Brian Webb'
+maintainer_email 'btwebb@gmail.com'
+license 'apachev2'
+description 'Installs/Configures war_hotel_test'
+long_description 'Installs/Configures war_hotel_test'
+version '0.1.0'
+
+depends 'yum'
+depends 'java'
+depends 'maven'
+depends 'patch'
+depends 'war_hotel'

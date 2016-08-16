@@ -10,19 +10,6 @@ attribute :https_port, :required => true, :kind_of => Integer
 attribute :http_port, :required => true, :kind_of => Integer
 attribute :jmx_port, :required => true, :kind_of => Integer
 
-action :build do
-
-  name = new_resource.name
-  if (new_resource.version)
-    name = "#{name}:#{version}"
-  end
-
-  execute "docker build -t #{name} ." do
-    cwd new_resource.cwd
-    not_if { not "docker inspect #{new_resource.image_name}:#{new_resource.version}" }
-  end
-end
-
 action :run do
 
   name = new_resource.name
@@ -38,7 +25,7 @@ action :run do
             -v #{new_resource.cwd}/logs:/usr/local/tomcat/logs \
             #{name}" do
     cwd new_resource.cwd
-    not_if "docker ps -all | grep #{new_resource.image_name} | grep #{new_resource.version}"
+    not_if "docker ps -a | grep #{new_resource.image_name} | grep #{new_resource.version}"
   end
 
   # wait for 5 seconds for the WARs to extract (so our integration tests don't fail)
