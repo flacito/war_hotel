@@ -36,7 +36,7 @@ end
 
 hotel_instance instance['id'] do
   version instance['version']
-  cwd "#{node['war_hotel']['instances_directory']}/#{instance['id']}/webapps"
+  cwd "#{node['war_hotel']['instances_directory']}/#{instance['id']}"
   https_port instance['tomcat']['https_port']
   http_port instance['tomcat']['http_port']
   jmx_port instance['tomcat']['jmx_port']

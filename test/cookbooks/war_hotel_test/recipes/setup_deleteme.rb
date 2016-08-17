@@ -1,4 +1,4 @@
-instance = {
+deleteme_instance = {
   "id" => "deleteme",
   "version" => "1.0.0",
   "docker_image" => "tomcat:alpine",
@@ -26,13 +26,19 @@ instance = {
   ]
 }
 
-hotel_instance_config instance['id'] do
-  cwd "#{node['war_hotel']['instances_directory']}/#{instance['id']}"
+hotel_instance_config 'test-instance1' do
+  cwd "#{node['war_hotel']['instances_directory']}/#{node['war_hotel']['instances'][0]['id']}"
   user "#{node['war_hotel']['user_id']}"
-  instance instance
+  instance node['war_hotel']['instances'][0]
 end
 
-war = instance['wars'][0]
+hotel_instance_config deleteme_instance['id'] do
+  cwd "#{node['war_hotel']['instances_directory']}/#{deleteme_instance['id']}"
+  user "#{node['war_hotel']['user_id']}"
+  instance deleteme_instance
+end
+
+war = deleteme_instance['wars'][0]
 war "install deletme war 1" do
   user node['war_hotel']['user_id']
   repository  node['war_hotel']['maven']['repository']
@@ -40,12 +46,12 @@ war "install deletme war 1" do
   artifact_id war['artifact_id']
   group_id  war['group_id']
   version   war['version']
-  destination "#{node['war_hotel']['instances_directory']}/#{instance['id']}"
+  destination "#{node['war_hotel']['instances_directory']}/#{deleteme_instance['id']}/webapps"
   verify_war false
   action :install
 end
 
-war = instance['wars'][1]
+war = deleteme_instance['wars'][1]
 war "install deletme war 2" do
   user node['war_hotel']['user_id']
   repository  node['war_hotel']['maven']['repository']
@@ -53,12 +59,12 @@ war "install deletme war 2" do
   artifact_id war['artifact_id']
   group_id  war['group_id']
   version   '1.0.0'
-  destination "#{node['war_hotel']['instances_directory']}/#{instance['id']}/webapps"
+  destination "#{node['war_hotel']['instances_directory']}/#{deleteme_instance['id']}/webapps"
   verify_war false
   action :install
 end
 
-war = instance['wars'][2]
+war = deleteme_instance['wars'][2]
 war "install deletme war 3" do
   user node['war_hotel']['user_id']
   repository  node['war_hotel']['maven']['repository']
@@ -66,17 +72,17 @@ war "install deletme war 3" do
   artifact_id war['artifact_id']
   group_id  war['group_id']
   version   '1.0.0'
-  destination "#{node['war_hotel']['instances_directory']}/#{instance['id']}/webapps"
+  destination "#{node['war_hotel']['instances_directory']}/#{deleteme_instance['id']}/webapps"
   verify_war false
   action :install
 end
 
-hotel_instance instance['id'] do
-  version instance['version']
-  cwd "#{node['war_hotel']['instances_directory']}/#{instance['id']}/webapps"
-  https_port instance['tomcat']['https_port']
-  http_port instance['tomcat']['http_port']
-  jmx_port instance['tomcat']['jmx_port']
+hotel_instance deleteme_instance['id'] do
+  version deleteme_instance['version']
+  cwd "#{node['war_hotel']['instances_directory']}/#{deleteme_instance['id']}/webapps"
+  https_port deleteme_instance['tomcat']['https_port']
+  http_port deleteme_instance['tomcat']['http_port']
+  jmx_port deleteme_instance['tomcat']['jmx_port']
   action :run
 end
 
