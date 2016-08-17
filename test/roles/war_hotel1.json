@@ -5,7 +5,6 @@
     "json_class": "Chef::Role",
     "override_attributes": {
       "war_hotel": {
-        "is_functional_test": true,
         "id":"bbt_war_hotel1",
         "instances": [
           {

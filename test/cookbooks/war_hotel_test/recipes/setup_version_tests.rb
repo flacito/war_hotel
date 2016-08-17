@@ -17,7 +17,7 @@ instance = {
 }
 
 hotel_instance_config instance['id'] do
-  cwd "#{node['war_hotel']['instances_directory']}/#{instance['id']}"
+  cwd instance_directory(instance)
   user "#{node['war_hotel']['user_id']}"
   instance instance
 end
@@ -29,14 +29,14 @@ war "install test-instance1 war 3" do
   artifact_id 'test-instance1-war3'
   group_id  'com.bbt.bcb'
   version   '2.0.0'
-  destination "#{node['war_hotel']['instances_directory']}/#{instance['id']}/webapps"
+  destination "#{instance_directory(instance)}/webapps"
   verify_war false
   action :install
 end
 
 hotel_instance instance['id'] do
   version instance['version']
-  cwd "#{node['war_hotel']['instances_directory']}/#{instance['id']}"
+  cwd instance_directory(instance)
   https_port instance['tomcat']['https_port']
   http_port instance['tomcat']['http_port']
   jmx_port instance['tomcat']['jmx_port']

@@ -3,7 +3,7 @@
 node['war_hotel']['instances'].each do |instance|
 
   hotel_instance_config instance['id'] do
-    cwd "#{node['war_hotel']['instances_directory']}/#{instance['id']}"
+    cwd instance_directory(instance)
     user "#{node['war_hotel']['user_id']}"
     instance instance
     action :create
@@ -18,7 +18,7 @@ node['war_hotel']['instances'].each do |instance|
       artifact_id war['artifact_id']
       group_id  war['group_id']
       version   war['version']
-      destination "#{node['war_hotel']['instances_directory']}/#{instance['id']}/webapps"
+      destination "#{instance_directory(instance)}/webapps"
       verify_war false
       action :install
     end

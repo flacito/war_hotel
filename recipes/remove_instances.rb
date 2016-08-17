@@ -1,5 +1,6 @@
 
-role_instances = {}
+roles_to_wars_hash = {}
+instances_hash = {}
 
 ruby_block 'remove WARs not in role' do
   block do
@@ -10,7 +11,8 @@ ruby_block 'remove WARs not in role' do
         wars[war['artifact_id']] = war['version']
       end
 
-      role_instances[instance['id']] = wars
+      roles_to_wars_hash[instance_directory(instance)] = wars
+      instances_hash[instance_directory(instance)] = instance
     end
 
     # Walk all the instances and their WARs that are on this machine
@@ -19,28 +21,34 @@ ruby_block 'remove WARs not in role' do
 
     # Loop over the children of the instances
     Pathname.new(node['war_hotel']['instances_directory']).children.select { |instance_dir|
-      Chef::Log.warn(role_instances)
       if instance_dir.directory?
-        sc = "#{node['war_hotel']['instances_directory']}/#{instance_dir.basename}"
+        dirname = "#{node['war_hotel']['instances_directory']}/#{instance_dir.basename.to_s}"
 
         # if the instance isn't in the role, remove the whole instance directory
-        Chef::Log.warn("role_instances.has_key?(instance_dir.basename.to_s) == #{role_instances.has_key?(instance_dir.basename.to_s)}")
-        if not role_instances.has_key?(instance_dir.basename.to_s)
-          Chef::Log.warn("Deleting #{instance_dir.basename}")
-          system "sudo docker ps -a | awk '{ print $1,$2 }' | grep #{instance_dir.basename} | awk '{print $1 }' | xargs -I {} sudo docker rm -f {} | awk '{print $2 }' | xargs -I {} sudo docker rmi -f {}"
-          FileUtils.remove_dir(sc)
+        if not instances_hash.has_key?(dirname)
+          Chef::Log.warn("Deleting #{dirname}")
+          instance = instances_hash[dirname]
+          # Chef::Log.warn("Instance = #{instance} of #{instances_hash}")
+          if instance == nil
+            system "sudo docker ps -a | awk '{ print $1,$2 }' | grep #{instance_dir.basename.to_s} | awk '{print $1 }' | xargs -I {} sudo docker rm -f {} | awk '{print $2 }' | xargs -I {} sudo docker rmi -f {}"
+            FileUtils.remove_dir(dirname)
+          else
+            system "sudo docker ps -a | awk '{ print $1,$2 }' | grep #{instance['id']} | awk '{print $1 }' | xargs -I {} sudo docker rm -f {} | awk '{print $2 }' | xargs -I {} sudo docker rmi -f {}"
+            FileUtils.remove_dir(dirname)
+          end
         # instance should still be there, but maybe the webapps not
         else
-          if (File.directory?("#{sc}/webapps"))
-            role_instance = role_instances[instance_dir.basename.to_s]
+          if (File.directory?("#{dirname}/webapps"))
+            role_instance = roles_to_wars_hash[instance_dir.basename.to_s]
             if not role_instance == nil
+              Chef::Log.warn("role_instance = #{role_instance} of #{roles_to_wars_hash}")
               # Loop over the children of instance/webapps
-              Pathname.new("#{sc}/webapps").children.select { |war_dir|
+              Pathname.new("#{dirname}/webapps").children.select { |war_dir|
                 if war_dir.directory? and not role_instance.has_key?(war_dir.basename.to_s)
                   # Oops, we found a WAR dir in the webapps directory that isn't in the role, remove it
-                  FileUtils.remove("#{sc}/webapps/#{war_dir.basename.to_s}.war")
-                  FileUtils.remove_dir("#{sc}/webapps/#{war_dir.basename.to_s}")
-                  Chef::Log.warn("Removed WAR directory not in role: #{sc}/#{war_dir.basename.to_s}")
+                  FileUtils.remove("#{dirname}/webapps/#{war_dir.basename.to_s}.war")
+                  FileUtils.remove_dir("#{dirname}/webapps/#{war_dir.basename.to_s}")
+                  Chef::Log.warn("Removed WAR directory not in role: #{dirname}/#{war_dir.basename.to_s}")
                 end
               }
             end

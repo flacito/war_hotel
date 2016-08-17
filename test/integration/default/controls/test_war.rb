@@ -1,11 +1,12 @@
+require 'helpers'
+
 def test_war (instance, war)
-  instances_directory = '/opt/war_hotel_manager'
 
   control "WAR installations #{instance['id']}, #{war['artifact_id']}" do
     impact 1.0
     title "Instance #{instance['id']}, war #{war['artifact_id']} is in the right places"
 
-    describe file("#{instances_directory}/#{instance['id']}/webapps/#{war['artifact_id']}") do
+    describe file("#{instance_directory(instance)}/webapps/#{war['artifact_id']}") do
       it { should be_directory }
     end
   end
@@ -36,7 +37,7 @@ def test_war (instance, war)
     impact 1.0
     title "The WAR, deleteme, in tc instance #{instance['id']} should not be there"
 
-    describe file("#{instances_directory}/#{instance['id']}/webapps/deleteme") do
+    describe file("#{instance_directory(instance)}/webapps/deleteme") do
       it { should_not be_directory }
     end
 

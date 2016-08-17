@@ -27,7 +27,7 @@ deleteme_instance = {
 }
 
 hotel_instance_config 'test-instance1' do
-  cwd "#{node['war_hotel']['instances_directory']}/#{node['war_hotel']['instances'][0]['id']}"
+  cwd instance_directory(node['war_hotel']['instances'][0])
   user "#{node['war_hotel']['user_id']}"
   instance node['war_hotel']['instances'][0]
 end
@@ -98,5 +98,5 @@ war "install test-instance1 war deleteme" do
   action :install
 end
 
-execute "mv /tmp/test-instance1-war3.war #{node['war_hotel']['instances_directory']}/test-instance1/webapps/deleteme.war" do
+execute "mv /tmp/test-instance1-war3.war #{instance_directory(node['war_hotel']['instances'][0])}" do
 end

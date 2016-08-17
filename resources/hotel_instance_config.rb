@@ -36,7 +36,7 @@ action :create do
     #   repositories   node['bbt_war_hotel']['maven']['repositories']
     #   group_id  instance.group_id
     #   version   instance.version
-    #   dest      "#{node['war_hotel']['instances_directory']}/#{instance['id']}/conf"
+    #   dest      "instance_directory/conf"
     #   packaging 'zip'
     #   action    :put
     # end
@@ -54,7 +54,7 @@ action :create do
     #   repositories   node['bbt_war_hotel']['maven']['repositories']
     #   group_id  instance.group_id
     #   version   instance.version
-    #   dest      "#{node['war_hotel']['instances_directory']}/#{instance['id']}/conf"
+    #   dest      "instance_directory/conf"
     #   packaging 'zip'
     #   action    :put
     # end

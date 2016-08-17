@@ -1,38 +1,37 @@
 require 'test_war'
 
 def test_instance (instance)
-  instances_directory = '/opt/war_hotel_manager'
 
   control "Instance directory for #{instance['id']}" do
     impact 1.0
-    title "Instance #{instance['id']} directory should be properly configured"
+    title "#{instance_directory(instance)} should be properly configured"
 
-    describe file("#{instances_directory}/#{instance['id']}") do
+    describe file("#{instance_directory(instance)}") do
       it { should be_directory }
     end
 
-    # describe file("#{instances_directory}/#{instance['id']}/conf") do
+    # describe file("#{instance_directory(instance)}/conf") do
     #   it { should be_directory }
     # end
     #
-    # describe file("#{instances_directory}/#{instance['id']}/lib") do
+    # describe file("#{instance_directory(instance)}/lib") do
     #   it { should be_directory }
     # end
     #
-    # describe file("#{instances_directory}/#{instance['id']}/bin/setenv.sh") do
+    # describe file("#{instance_directory(instance)}/bin/setenv.sh") do
     #   it { should exist }
     # end
   end
 
   control "Dockerfile for #{instance['id']}" do
     impact 1.0
-    title "Dockerfile for #{instance['id']} should be properly configured"
+    title "#{instance_directory(instance)}/Dockerfile should be properly configured"
 
-    describe file("#{instances_directory}/#{instance['id']}/Dockerfile") do
+    describe file("#{instance_directory(instance)}/Dockerfile") do
       it { should exist }
     end
 
-    describe file("#{instances_directory}/#{instance['id']}/Dockerfile") do
+    describe file("#{instance_directory(instance)}/Dockerfile") do
       its('content') { should match /FROM #{instance['docker_image']}/ }
       its('content') { should match /RUN rm -Rf \/usr\/local\/tomcat\/webapps\/ROOT/ }
       # its('content') { should match /COPY conf\/* \/usr\/local\/tomcat\/conf/ }
@@ -49,7 +48,7 @@ def test_instance (instance)
     impact 1.0
     title "Instance #{instance['id']} must not have the ROOT web application installed"
 
-    describe file("#{instances_directory}/#{instance['id']}/webapps/ROOT") do
+    describe file("#{instance_directory(instance)}/webapps/ROOT") do
       it { should_not be_directory }
     end
 
