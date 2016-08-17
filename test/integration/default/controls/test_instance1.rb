@@ -1,6 +1,6 @@
 instance1 = {
   "id" => "test-instance1",
-  "docker_image" => "tomcat:alpine",
+  "docker_image" => "tomcat:8.5",
   "tomcat" => {
     "https_port" => 10443,
     "http_port" => 10080,

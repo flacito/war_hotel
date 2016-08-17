@@ -4,7 +4,7 @@ node['war_hotel']['instances'].each do |instance|
 
   # Start the instance container image
   hotel_instance instance['id'] do
-    version instance['version']
+    image_name instance['docker_image']
     cwd instance_directory(instance)
     https_port instance['tomcat']['https_port']
     http_port instance['tomcat']['http_port']

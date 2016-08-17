@@ -14,6 +14,7 @@ ruby_block 'remove WARs not in role' do
       roles_to_wars_hash[instance_directory(instance)] = wars
       instances_hash[instance_directory(instance)] = instance
     end
+    Chef::Log.warn("Instances in role: #{instances_hash}")
 
     # Walk all the instances and their WARs that are on this machine
     require 'fileutils'
@@ -26,16 +27,28 @@ ruby_block 'remove WARs not in role' do
 
         # if the instance isn't in the role, remove the whole instance directory
         if not instances_hash.has_key?(dirname)
-          Chef::Log.warn("Deleting #{dirname}")
           instance = instances_hash[dirname]
-          # Chef::Log.warn("Instance = #{instance} of #{instances_hash}")
+          system_str = nil
           if instance == nil
-            system "sudo docker ps -a | awk '{ print $1,$2 }' | grep #{instance_dir.basename.to_s} | awk '{print $1 }' | xargs -I {} sudo docker rm -f {} | awk '{print $2 }' | xargs -I {} sudo docker rmi -f {}"
-            FileUtils.remove_dir(dirname)
+            splitstr = instance_dir.basename.to_s.split("-_-")
+            Chef::Log.warn(splitstr)
+            container_name = nil
+            docker_image = nil
+            if (splitstr.length == 2)
+              container_name = splitstr[0]
+              docker_image = splitstr[splitstr.length-1]
+              system_str = "sudo docker ps -a | awk '{ print $1,$2 }' | grep #{container_name} | grep #{docker_image} | awk '{print $1 }' | xargs -I {} sudo docker rm -f {} | awk '{print $2 }' | xargs -I {} sudo docker rmi -f {}"
+            else
+              system_str = "sudo docker ps -a | awk '{ print $1,$2 }' | grep #{instance_dir.basename.to_s} | awk '{print $1 }' | xargs -I {} sudo docker rm -f {} | awk '{print $2 }' | xargs -I {} sudo docker rmi -f {}"
+            end
           else
-            system "sudo docker ps -a | awk '{ print $1,$2 }' | grep #{instance['id']} | awk '{print $1 }' | xargs -I {} sudo docker rm -f {} | awk '{print $2 }' | xargs -I {} sudo docker rmi -f {}"
-            FileUtils.remove_dir(dirname)
+            system_str = "sudo docker ps -a | awk '{ print $1,$2 }' | grep #{instance['id']} | grep #{instance['docker_image'].gsub(':','_')} | awk '{print $1 }' | xargs -I {} sudo docker rm -f {} | awk '{print $2 }' | xargs -I {} sudo docker rmi -f {}"
           end
+
+          Chef::Log.warn("Deleting #{dirname}")
+          Chef::Log.warn(system_str)
+          system system_str
+          FileUtils.remove_dir(dirname)
         # instance should still be there, but maybe the webapps not
         else
           if (File.directory?("#{dirname}/webapps"))

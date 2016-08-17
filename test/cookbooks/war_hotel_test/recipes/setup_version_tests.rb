@@ -35,7 +35,7 @@ war "install test-instance1 war 3" do
 end
 
 hotel_instance instance['id'] do
-  version instance['version']
+  image_name instance['docker_image']
   cwd instance_directory(instance)
   https_port instance['tomcat']['https_port']
   http_port instance['tomcat']['http_port']

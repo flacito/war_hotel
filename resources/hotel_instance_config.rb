@@ -73,12 +73,12 @@ action :create do
   # Create the instance container image
   name = new_resource.instance_id
   if (instance['version'])
-    name = "#{name}:#{instance['version']}"
+    name = "#{name}:#{instance['docker_image'].gsub(':','_')}"
   end
 
   execute "docker build -t #{name} ." do
     cwd new_resource.cwd
-    not_if { not "docker inspect #{new_resource.instance_id}:#{instance['version']}" }
+    not_if { not "docker inspect #{name}" }
   end
 
 end

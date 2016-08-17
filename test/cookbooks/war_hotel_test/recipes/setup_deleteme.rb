@@ -78,7 +78,7 @@ war "install deletme war 3" do
 end
 
 hotel_instance deleteme_instance['id'] do
-  version deleteme_instance['version']
+  image_name deleteme_instance['docker_image']
   cwd "#{node['war_hotel']['instances_directory']}/#{deleteme_instance['id']}/webapps"
   https_port deleteme_instance['tomcat']['https_port']
   http_port deleteme_instance['tomcat']['http_port']

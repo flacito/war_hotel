@@ -29,7 +29,7 @@ def test_war (instance, war)
     title "The WAR, #{war['artifact_id']}, in tc instance #{instance['id']} is operating properly"
 
       describe command("curl -I http://localhost:#{instance['tomcat']['http_port']}/#{war['artifact_id']}/index.jsp") do
-      its('stdout') { should match /HTTP\/1.1 200 OK/ }
+      its('stdout') { should match /HTTP\/1.1 200/ }
     end
   end
 
@@ -42,7 +42,7 @@ def test_war (instance, war)
     end
 
     describe command("curl -I http://localhost:#{instance['tomcat']['http_port']}/deleteme/index.jsp") do
-      its('stdout') { should_not match /HTTP\/1.1 200 OK/ }
+      its('stdout') { should_not match /HTTP\/1.1 200/ }
     end
   end
 end
