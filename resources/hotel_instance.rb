@@ -11,7 +11,7 @@ attribute :jmx_port, :required => true, :kind_of => Integer
 
 action :run do
 
-  iname = "#{name}:#{new_resource.image_name.gsub(':','_')}"
+  iname = "#{name}:#{escape_docker_image_name(new_resource.image_name)}"
   cname = "#{container_name}-__-#{image_name.gsub(':','_')}"
 
   execute "docker run -d --name #{cname} \
@@ -22,7 +22,7 @@ action :run do
             -v #{new_resource.cwd}/logs:/usr/local/tomcat/logs \
             #{iname}" do
     cwd new_resource.cwd
-    not_if "docker ps -a | grep #{new_resource.container_name} | grep #{new_resource.image_name.gsub(':','_')}"
+    not_if "docker ps -a | grep #{new_resource.container_name} | grep #{escape_docker_image_name(new_resource.image_name)}"
   end
 
   # wait for 5 seconds for the WARs to extract (so our integration tests don't fail)
