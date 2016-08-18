@@ -11,18 +11,16 @@ attribute :jmx_port, :required => true, :kind_of => Integer
 
 action :run do
 
-  name = new_resource.container_name
-  if (new_resource.image_name)
-    name = "#{name}:#{new_resource.image_name.gsub(':','_')}"
-  end
+  iname = "#{name}:#{new_resource.image_name.gsub(':','_')}"
+  cname = "#{container_name}-__-#{image_name.gsub(':','_')}"
 
-  execute "docker run -d --name #{new_resource.container_name} \
+  execute "docker run -d --name #{cname} \
             -p #{new_resource.https_port}:8443 \
             -p #{new_resource.http_port}:8080 \
             -p #{new_resource.jmx_port}:8090 \
             -v #{new_resource.cwd}/webapps:/usr/local/tomcat/webapps \
             -v #{new_resource.cwd}/logs:/usr/local/tomcat/logs \
-            #{name}" do
+            #{iname}" do
     cwd new_resource.cwd
     not_if "docker ps -a | grep #{new_resource.container_name} | grep #{new_resource.image_name.gsub(':','_')}"
   end

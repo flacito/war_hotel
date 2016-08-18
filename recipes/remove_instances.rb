@@ -35,11 +35,11 @@ ruby_block 'remove WARs not in role' do
             container_name = nil
             docker_image = nil
             if (splitstr.length == 2)
-              container_name = splitstr[0]
-              docker_image = splitstr[splitstr.length-1]
-              system_str = "sudo docker ps -a | awk '{ print $1,$2 }' | grep #{container_name} | grep #{docker_image} | awk '{print $1 }' | xargs -I {} sudo docker rm -f {} | awk '{print $2 }' | xargs -I {} sudo docker rmi -f {}"
+              container_name = "#{splitstr[0]}-__-#{splitstr[1]}"
+              docker_image = splitstr[1]
+              system_str = "sudo docker rm -f #{container_name} && sudo docker rmi -f #{splitstr[0]}:#{splitstr[1]}"
             else
-              system_str = "sudo docker ps -a | awk '{ print $1,$2 }' | grep #{instance_dir.basename.to_s} | awk '{print $1 }' | xargs -I {} sudo docker rm -f {} | awk '{print $2 }' | xargs -I {} sudo docker rmi -f {}"
+              system_str = "sudo docker ps -a | awk '{ print $1,$2 }' | grep #{instance_dir.basename.to_s} | awk '{print $1 }' | xargs -I {} sudo docker rm -f {} && sudo docker images -a | awk '{ print $1,$2 }' | grep #{instance_dir.basename.to_s} | awk '{print $1\":\"$2}' | xargs -I {} sudo docker rmi -f {}"
             end
           else
             system_str = "sudo docker ps -a | awk '{ print $1,$2 }' | grep #{instance['id']} | grep #{instance['docker_image'].gsub(':','_')} | awk '{print $1 }' | xargs -I {} sudo docker rm -f {} | awk '{print $2 }' | xargs -I {} sudo docker rmi -f {}"
