@@ -3,9 +3,9 @@ instance = {
   "version" => "1.0.0",
   "docker_image" => "tomcat:alpine",
   "tomcat" => {
-    "https_port" => 10443,
-    "http_port" => 10080,
-    "jmx_port" => 10099,
+    "https_port" => 19443,
+    "http_port" => 19080,
+    "jmx_port" => 19099,
   },
   "wars" => [
     {
