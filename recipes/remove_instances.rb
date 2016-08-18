@@ -42,7 +42,7 @@ ruby_block 'remove WARs not in role' do
               system_str = "sudo docker ps -a | awk '{ print $1,$2 }' | grep #{instance_dir.basename.to_s} | awk '{print $1 }' | xargs -I {} sudo docker rm -f {} && sudo docker images -a | awk '{ print $1,$2 }' | grep #{instance_dir.basename.to_s} | awk '{print $1\":\"$2}' | xargs -I {} sudo docker rmi -f {}"
             end
           else
-            system_str = "sudo docker ps -a | awk '{ print $1,$2 }' | grep #{instance['id']} | grep #{instance['docker_image'].gsub(':','_')} | awk '{print $1 }' | xargs -I {} sudo docker rm -f {} | awk '{print $2 }' | xargs -I {} sudo docker rmi -f {}"
+            system_str = "sudo docker ps -a | awk '{ print $1,$2 }' | grep #{instance['id']} | grep #{escape_docker_image_name(instance['docker_image'])} | awk '{print $1 }' | xargs -I {} sudo docker rm -f {} | awk '{print $2 }' | xargs -I {} sudo docker rmi -f {}"
           end
 
           Chef::Log.warn("Deleting #{dirname}")
