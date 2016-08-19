@@ -49,4 +49,9 @@ control "Tomcat config" do
   describe command("curl -L http://localhost:#{instance1['tomcat']['http_port']}/test-instance1-war1/index.jsp") do
     its('stdout') { should match /maxPostSize=2097152/ }
   end
+
+  describe file("#{instance_directory(instance1)}/test-instance1-war3.war") do
+    it { should_not exist }
+  end
+
 end

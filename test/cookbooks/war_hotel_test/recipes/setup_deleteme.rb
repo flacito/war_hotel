@@ -90,5 +90,5 @@ war "install test-instance1 war deleteme" do
   action :install
 end
 
-execute "mv /tmp/test-instance1-war3.war #{instance_directory(node['war_hotel']['instances'][0])}" do
+execute "mv /tmp/test-instance1-war3.war #{instance_directory(node['war_hotel']['instances'][0])}/webapps" do
 end
