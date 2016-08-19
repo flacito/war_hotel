@@ -22,7 +22,7 @@ action :create do
   # pull down the specific tomcat config if any
   if new_resource.instance['tomcat']['config']
     maven new_resource.instance['tomcat']['config']['artifact_id'] do
-      repositories [ new_resource.instance['tomcat']['config']['repository_url'] ]
+      repositories node['war_hotel']['maven']['repositories']
       owner new_resource.user
       group_id  new_resource.instance['tomcat']['config']['group_id']
       version   new_resource.instance['tomcat']['config']['version']

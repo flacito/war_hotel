@@ -13,7 +13,10 @@
     "allow_upgrades":true,
     "war_hotel": {
       "maven": {
-        "repository": "http://dl.bintray.com/flacito/wars-dev"
+        "repositories": [
+          "http://dl.bintray.com/flacito/wars-dev",
+          "http://dl.bintray.com/flacito/war-hotels-dev"
+        ]
       }
     }
   }

@@ -9,19 +9,16 @@ deleteme_instance = {
   },
   "wars" => [
     {
-      "repository_url" => "http://dl.bintray.com/flacito/wars-dev",
       "artifact_id" => "test-instance1-war1",
       "group_id" => "com.bbt.bcb",
       "version" => "1.0.0"
     },
     {
-      "repository_url" => "http://dl.bintray.com/flacito/wars-dev",
       "artifact_id" => "test-instance1-war2",
       "group_id" => "com.bbt.bcb",
       "version" => "1.0.0"
     },
     {
-      "repository_url" => "http://dl.bintray.com/flacito/wars-dev",
       "artifact_id" => "test-instance1-war3",
       "group_id" => "com.bbt.bcb",
       "version" => "2.0.0"
@@ -49,7 +46,6 @@ war "install deletme war 1" do
   group_id  war['group_id']
   version   war['version']
   destination "#{node['war_hotel']['instances_directory']}/#{deleteme_instance['id']}/webapps"
-  repository_url war['repository_url']
   verify_war false
   action :install
 end
@@ -62,7 +58,6 @@ war "install deletme war 2" do
   group_id  war['group_id']
   version   '1.0.0'
   destination "#{node['war_hotel']['instances_directory']}/#{deleteme_instance['id']}/webapps"
-  repository_url war['repository_url']
   verify_war false
   action :install
 end
@@ -76,7 +71,6 @@ war "install deletme war 3" do
   version   '1.0.0'
   destination "#{node['war_hotel']['instances_directory']}/#{deleteme_instance['id']}/webapps"
   verify_war false
-  repository_url war['repository_url']
   action :install
 end
 
@@ -97,7 +91,6 @@ war "install test-instance1 war deleteme" do
   version   '1.0.0'
   destination "/tmp"
   verify_war false
-  repository_url war['repository_url']
   action :install
 end
 

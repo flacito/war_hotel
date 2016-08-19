@@ -16,7 +16,6 @@
               "http_port":10080,
               "jmx_port":10099,
               "config": {
-                "repository_url":"http://dl.bintray.com/flacito/war-hotels-dev",
                 "artifact_id":"test-instance1-tomcat-config",
                 "group_id":"com.bbt.bcb",
                 "version": "1.0.0"
@@ -24,7 +23,6 @@
             },
             "wars": [
               {
-                "repository_url":"http://dl.bintray.com/flacito/wars-dev",
                 "artifact_id":"test-instance1-war1",
                 "group_id":"com.bbt.bcb",
                 "version": "1.0.0",
@@ -40,7 +38,6 @@
                 ]
               },
               {
-                "repository_url":"http://dl.bintray.com/flacito/wars-dev",
                 "artifact_id":"test-instance1-war2",
                 "group_id":"com.bbt.bcb",
                 "version": "1.0.0",
@@ -52,7 +49,6 @@
                 ]
               },
               {
-                "repository_url":"http://dl.bintray.com/flacito/wars-dev",
                 "artifact_id":"test-instance1-war3",
                 "group_id":"com.bbt.bcb",
                 "version": "1.0.0",
@@ -95,7 +91,6 @@
             },
             "wars": [
               {
-                "repository_url":"http://dl.bintray.com/flacito/wars-dev",
                 "artifact_id":"test-instance2-war1",
                 "group_id":"com.bbt.bcb",
                 "version": "1.0.0",
@@ -111,7 +106,6 @@
                 ]
               },
               {
-                "repository_url":"http://dl.bintray.com/flacito/wars-dev",
                 "artifact_id":"test-instance2-war2",
                 "group_id":"com.bbt.bcb",
                 "version": "1.0.0",
@@ -123,7 +117,6 @@
                 ]
               },
               {
-                "repository_url":"http://dl.bintray.com/flacito/wars-dev",
                 "artifact_id":"test-instance2-war3",
                 "group_id":"com.bbt.bcb",
                 "version": "2.0.0",
@@ -166,7 +159,6 @@
             },
             "wars": [
               {
-                "repository_url":"http://dl.bintray.com/flacito/wars-dev",
                 "artifact_id":"test-instance3-war1",
                 "group_id":"com.bbt.bcb",
                 "version": "1.0.0",
@@ -182,7 +174,6 @@
                 ]
               },
               {
-                "repository_url":"http://dl.bintray.com/flacito/wars-dev",
                 "artifact_id":"test-instance3-war2",
                 "group_id":"com.bbt.bcb",
                 "version": "1.0.0",
@@ -194,7 +185,6 @@
                 ]
               },
               {
-                "repository_url":"http://dl.bintray.com/flacito/wars-dev",
                 "artifact_id":"test-instance3-war3",
                 "group_id":"com.bbt.bcb",
                 "version": "1.0.0",
