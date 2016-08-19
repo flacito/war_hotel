@@ -11,10 +11,11 @@ attribute :version, :name_attribute => false, :kind_of => String
 attribute :destination, :name_attribute => false, :kind_of => String
 attribute :verify_war, :name_attribute => false, :kind_of => [TrueClass, FalseClass]
 attribute :user, :name_attribute => false, :kind_of => String
+attribute :repository_url, :required => true, :kind_of => String
 
 action :install do
   maven new_resource.artifact_id do
-    repositories [ node['war_hotel']['maven']['repository'] ]
+    repositories [ new_resource.repository_url ]
     group_id  new_resource.group_id
     version   new_resource.version
     dest      new_resource.destination

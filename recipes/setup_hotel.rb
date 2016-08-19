@@ -19,6 +19,7 @@ node['war_hotel']['instances'].each do |instance|
       version   war['version']
       destination "#{instance_directory(instance)}/webapps"
       verify_war false
+      repository_url war['repository_url']
       action :install
     end
   end

@@ -9,6 +9,7 @@ instance = {
   },
   "wars" => [
     {
+      "repository_url" => "http://dl.bintray.com/flacito/wars-dev",
       "artifact_id" => "test-instance1-war3",
       "group_id" => "com.bbt.bcb",
       "version" => "2.0.0"
@@ -30,6 +31,7 @@ war "install test-instance1 war 3" do
   version   '2.0.0'
   destination "#{instance_directory(instance)}/webapps"
   verify_war false
+  repository_url 'http://dl.bintray.com/flacito/wars-dev'
   action :install
 end
 

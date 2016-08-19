@@ -20,44 +20,25 @@ action :create do
     source 'Dockerfile.erb'
     user new_resource.user
     action :create
-    variables :instance => instance
+    variables :instance => new_resource.instance
   end
 
   # pull down the specific tomcat config if any
-  if (instance['conf'])
-    # pull down the Tomcat config if any
-    directory "#{new_resource.cwd}/conf" do
-      user new_resource.user
-      action :create
+  if new_resource.instance['tomcat']['config']
+    maven new_resource.instance['tomcat']['config']['artifact_id'] do
+      repositories [ new_resource.instance['tomcat']['config']['repository_url'] ]
+      owner new_resource.user
+      group_id  new_resource.instance['tomcat']['config']['group_id']
+      version   new_resource.instance['tomcat']['config']['version']
+      dest      new_resource.cwd
+      packaging 'jar'
+      action    :put
     end
 
-    # maven instance['conf'].artifact_id do
-    #   owner new_resource.user
-    #   repositories   node['bbt_war_hotel']['maven']['repositories']
-    #   group_id  instance.group_id
-    #   version   instance.version
-    #   dest      "instance_directory/conf"
-    #   packaging 'zip'
-    #   action    :put
-    # end
-  end
-
-  # pull down dependent libraries if any
-  if (instance['lib'])
-    directory "#{new_resource.cwd}/lib" do
+    execute "unzip -o #{new_resource.cwd}/#{new_resource.instance['tomcat']['config']['artifact_id']}.jar -x *META-INF*" do
       user new_resource.user
-      action :create
+      cwd new_resource.cwd
     end
-
-    # maven instance['lib'].artifact_id do
-    #   owner new_resource.user
-    #   repositories   node['bbt_war_hotel']['maven']['repositories']
-    #   group_id  instance.group_id
-    #   version   instance.version
-    #   dest      "instance_directory/conf"
-    #   packaging 'zip'
-    #   action    :put
-    # end
   end
 
   directory "#{new_resource.cwd}/logs" do
@@ -73,7 +54,7 @@ action :create do
   # Create the instance container image
   name = new_resource.instance_id
   if (instance['version'])
-    name = "#{name}:#{instance['docker_image'].gsub(':','_')}"
+    name = "#{name}:#{new_resource.instance['docker_image'].gsub(':','_')}"
   end
 
   execute "docker build -t #{name} ." do

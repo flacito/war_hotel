@@ -5,21 +5,11 @@ instance1 = {
     "https_port" => 10443,
     "http_port" => 10080,
     "jmx_port" => 10099,
-  },
-  "env" =>  {
-    "artifact_id" => "test-instance1-env",
-    "group_id" => "com.bbt.bcb",
-    "version" =>  "1.0.0"
-  },
-  "conf" =>  {
-    "artifact_id" => "test-instance1-conf",
-    "group_id" => "com.bbt.bcb",
-    "version" =>  "1.0.0"
-  },
-  "lib" =>  {
-    "artifact_id" => "test-instance1-lib",
-    "group_id" => "com.bbt.bcb",
-    "version" =>  "1.0.0"
+    "config" =>  {
+      "artifact_id" => "test-instance1-tomcat-config",
+      "group_id" => "com.bbt.bcb",
+      "version" =>  "1.0.0"
+    }
   },
   "wars" => [
     {
@@ -42,3 +32,12 @@ instance1 = {
 
 require 'test_instance'
 test_instance (instance1)
+
+control "Tomcat config" do
+  impact 1.0
+  title "Test Instance 1 has a specific Tomcat configuration that should be downloaded and extracted."
+
+  describe file("#{instance_directory(instance1)}/conf") do
+    it { should be_directory }
+  end
+end

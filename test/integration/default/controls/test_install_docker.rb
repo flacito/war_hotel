@@ -5,7 +5,7 @@ control "WAR Hotel Docker Installation" do
 
   describe command('docker -v') do
     its('exit_status') { should eq 0 }
-    its('stdout') { should match /1.12.0/ }
+    its('stdout') { should match /1.12.1/ }
   end
 
   describe service('docker') do
