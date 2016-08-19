@@ -46,7 +46,6 @@ war "install deletme war 1" do
   group_id  war['group_id']
   version   war['version']
   destination "#{node['war_hotel']['instances_directory']}/#{deleteme_instance['id']}/webapps"
-  verify_war false
   action :install
 end
 
@@ -58,7 +57,6 @@ war "install deletme war 2" do
   group_id  war['group_id']
   version   '1.0.0'
   destination "#{node['war_hotel']['instances_directory']}/#{deleteme_instance['id']}/webapps"
-  verify_war false
   action :install
 end
 
@@ -70,7 +68,6 @@ war "install deletme war 3" do
   group_id  war['group_id']
   version   '1.0.0'
   destination "#{node['war_hotel']['instances_directory']}/#{deleteme_instance['id']}/webapps"
-  verify_war false
   action :install
 end
 
@@ -90,7 +87,6 @@ war "install test-instance1 war deleteme" do
   group_id  war['group_id']
   version   '1.0.0'
   destination "/tmp"
-  verify_war false
   action :install
 end
 

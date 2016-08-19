@@ -29,7 +29,6 @@ war "install test-instance1 war 3" do
   group_id  'com.bbt.bcb'
   version   '2.0.0'
   destination "#{instance_directory(instance)}/webapps"
-  verify_war false
   action :install
 end
 

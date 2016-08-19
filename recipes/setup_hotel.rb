@@ -18,7 +18,6 @@ node['war_hotel']['instances'].each do |instance|
       group_id  war['group_id']
       version   war['version']
       destination "#{instance_directory(instance)}/webapps"
-      verify_war false
       action :install
     end
   end
