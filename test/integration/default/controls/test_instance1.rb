@@ -40,4 +40,13 @@ control "Tomcat config" do
   describe file("#{instance_directory(instance1)}/conf") do
     it { should be_directory }
   end
+
+  describe file("#{instance_directory(instance1)}/Dockerfile") do
+    its('content') { should match /COPY conf/ }
+    its('content') { should match /COPY lib/ }
+  end
+
+  describe command("curl -L http://localhost:#{instance1['tomcat']['http_port']}/test-instance1-war1/index.jsp") do
+    its('stdout') { should match /maxPostSize=2097152/ }
+  end
 end

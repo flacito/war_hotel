@@ -15,13 +15,9 @@ action :create do
     action :create
   end
 
-  # Create the Dockerfile
-  template "#{new_resource.cwd}/Dockerfile" do
-    source 'Dockerfile.erb'
-    user new_resource.user
-    action :create
-    variables :instance => new_resource.instance
-  end
+  change_conf = ::File.directory?("#{new_resource.cwd}/conf")
+  change_lib = ::File.directory?("#{new_resource.cwd}/lib")
+  change_env = ::File.directory?("#{new_resource.cwd}/bin")
 
   # pull down the specific tomcat config if any
   if new_resource.instance['tomcat']['config']
@@ -39,6 +35,14 @@ action :create do
       user new_resource.user
       cwd new_resource.cwd
     end
+  end
+
+  # Create the Dockerfile
+  template "#{new_resource.cwd}/Dockerfile" do
+    source 'Dockerfile.erb'
+    user new_resource.user
+    action :create
+    variables :instance => new_resource.instance, :change_conf => change_conf, :change_lib => change_lib, :change_env => change_env
   end
 
   directory "#{new_resource.cwd}/logs" do

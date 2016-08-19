@@ -2,9 +2,12 @@ FROM <%= @instance['docker_image'] %>
 
 RUN rm -Rf /usr/local/tomcat/webapps/ROOT
 
-<% if @instance['conf'] %>
-COPY conf/* /usr/local/tomcat/conf
+<% if @change_conf %>
+COPY conf/* /usr/local/tomcat/conf/
 <% end %>
-<% if @instance['libs'] %>
-COPY lib/* /usr/local/tomcat/lib
+<% if @change_lib %>
+COPY lib/* /usr/local/tomcat/lib/
+<% end %>
+<% if @change_env %>
+COPY bin/setenv.bat /usr/local/tomcat/bin/setenv.bat
 <% end %>
