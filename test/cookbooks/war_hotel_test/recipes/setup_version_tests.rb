@@ -24,7 +24,6 @@ end
 
 war "install test-instance1 war 3" do
   user node['war_hotel']['user_id']
-  repository  node['war_hotel']['maven']['repository']
   instance_id 'test-instance1'
   artifact_id 'test-instance1-war3'
   group_id  'com.bbt.bcb'

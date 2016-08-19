@@ -13,7 +13,6 @@ node['war_hotel']['instances'].each do |instance|
     # pull down the WARs
     war "install #{war['artifact_id']}" do
       user node['war_hotel']['user_id']
-      repository  node['war_hotel']['maven']['repository']
       instance_id instance['id']
       artifact_id war['artifact_id']
       group_id  war['group_id']

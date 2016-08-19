@@ -41,7 +41,6 @@ end
 war = deleteme_instance['wars'][0]
 war "install deletme war 1" do
   user node['war_hotel']['user_id']
-  repository  node['war_hotel']['maven']['repository']
   instance_id "deleteme"
   artifact_id war['artifact_id']
   group_id  war['group_id']
@@ -54,7 +53,6 @@ end
 war = deleteme_instance['wars'][1]
 war "install deletme war 2" do
   user node['war_hotel']['user_id']
-  repository  node['war_hotel']['maven']['repository']
   instance_id "deleteme"
   artifact_id war['artifact_id']
   group_id  war['group_id']
@@ -67,7 +65,6 @@ end
 war = deleteme_instance['wars'][2]
 war "install deletme war 3" do
   user node['war_hotel']['user_id']
-  repository  node['war_hotel']['maven']['repository']
   instance_id "deleteme"
   artifact_id war['artifact_id']
   group_id  war['group_id']
@@ -88,7 +85,6 @@ end
 
 war "install test-instance1 war deleteme" do
   user node['war_hotel']['user_id']
-  repository  node['war_hotel']['maven']['repository']
   instance_id "test-instance1"
   artifact_id war['artifact_id']
   group_id  war['group_id']

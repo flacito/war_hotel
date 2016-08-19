@@ -6,5 +6,4 @@ default['war_hotel']['java']['baseurl'] = 'https://dl.bintray.com/flacito/rpm-ja
 default['war_hotel']['user_id'] = 'war_hotel_manager'
 default['war_hotel']['instances_directory'] = "/opt/#{node['war_hotel']['user_id']}"
 
-default['war_hotel']['maven']['repo_address'] = '192.168.1.3'
-default['war_hotel']['maven']['repository'] = "http://#{node['war_hotel']['maven']['repo_address']}/maven/repository"
+default['war_hotel']['maven']['repository'] = "http://dl.bintray.com/flacito/wars-dev"

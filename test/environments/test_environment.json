@@ -10,6 +10,11 @@
 
   },
   "override_attributes": {
-    "allow_upgrades":true
+    "allow_upgrades":true,
+    "war_hotel": {
+      "maven": {
+        "repository": "http://dl.bintray.com/flacito/wars-dev"
+      }
+    }
   }
 }
