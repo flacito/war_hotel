@@ -18,33 +18,34 @@ It's all driven by a specific Chef role that originates in Git, drives through a
         "instances": [
 		  {
 		    "id": "instance1",
-		    "java": {
-		      "version": "1.8",
-		      "use_oracle_jdk": false
-		    },
-		    "tomcat": {
-		      "https_port": 10443,
-		      "http_port": 10080,
-		      ...
-		    }, 
+	            "docker_image": "tomcat:8.5",
+	            "tomcat": {
+	              "https_port":10443,
+	              "http_port":10080,
+	              "jmx_port":10099,
+	              "config": {
+	                "artifact_id":"test-instance1-tomcat-config",
+	                "group_id":"com.bbt.bcb",
+	                "version": "1.0.0"
+	              }
+	            },
 		  	...
-		  	"wars": [
-		  	  {
-		  	    "artifact_id": "war1",
-		  	    "group_id": "com.bbt.bcb",
-		  	    "version": "1.0.0"
-                "smoke_test_commands": [
-                  {
-                    "command": "curl -f http://localhost:10080/test-instance1-war1",
-                    "expected_return_code": 0
-                  },
-                  {
-                    "command": "curl -L  http://localhost:10080/test-instance1-war1 | grep \"test-instance1-war1 v1.0.0\"",
-                    "expected_return_code": 0
-                  }
-		  	  },
-		  	  ...
-		  	]
+	  	    "wars": [
+	  	        {
+	  	          "artifact_id": "war1",
+	  	          "group_id": "com.bbt.bcb",
+	  	          "version": "1.0.0"
+	                  "smoke_test_commands": [
+	                    {
+	                      "command": "curl -f http://localhost:10080/test-instance1-war1",
+	                      "expected_return_code": 0
+	                    },
+	                    {
+	                      "command": "curl -L  http://localhost:10080/test-instance1-war1 | grep \"test-instance1-war1 v1.0.0\"",
+	                      "expected_return_code": 0
+	                    },
+		  	    ...
+		     ]
 		  }
 		  ...
         ]
