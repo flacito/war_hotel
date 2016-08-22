@@ -9,7 +9,7 @@ It's all driven by a specific Chef role that originates in Git, drives through a
 ```
 {
     "name": "war_hotel1",
-    "description": "BB&T Web ARchive Hotel role for Hotel #1.",
+    "description": "Web ARchive Hotel role for Hotel #1.",
     "chef_type": "role",
     "json_class": "Chef::Role",
     "override_attributes": {
