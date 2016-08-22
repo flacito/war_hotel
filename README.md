@@ -2,7 +2,7 @@
 ----
 ## Introduction
 
-war\_hotel__ is a Chef cookbook that fully configures a BB&T Tomcat Web server hotel.  What's a web server hotel?  It's a big server that can host a lot of instances of a web server and Web ARchives (WARs) in those instances. 
+__war\_hotel__ is a Chef cookbook that fully configures a BB&T Tomcat Web server hotel.  What's a web server hotel?  It's a big server that can host a lot of instances of a web server and Web ARchives (WARs) in those instances. 
 
 It's all driven by a specific Chef role that originates in Git, drives through a delivery pipeline, and ends up in a production Chef org and eventually assigned to the run list of a Chef node. An example role:
 
