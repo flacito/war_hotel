@@ -9,7 +9,6 @@
         "instances": [
           {
             "id": "test-instance1",
-            "version": "1.0.0",
             "docker_image": "tomcat:8.5",
             "tomcat": {
               "https_port":10443,
@@ -67,7 +66,6 @@
           },
           {
             "id": "test-instance2",
-            "version": "1.0.0",
             "docker_image": "tomcat:alpine",
             "tomcat": {
               "https_port":11443,
@@ -135,7 +133,6 @@
           },
           {
             "id": "test-instance3",
-            "version": "1.0.0",
             "docker_image": "tomcat:alpine",
             "tomcat": {
               "https_port":12443,
