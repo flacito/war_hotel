@@ -56,14 +56,11 @@ action :create do
   end
 
   # Create the instance container image
-  name = new_resource.instance_id
-  if (instance['version'])
-    name = "#{name}:#{new_resource.instance['docker_image'].gsub(':','_')}"
-  end
+  iname = "#{name}:#{escape_docker_image_name(instance['docker_image'])}"
 
-  execute "docker build -t #{name} ." do
+  execute "docker build -t #{iname} ." do
     cwd new_resource.cwd
-    not_if { not "docker inspect #{name}" }
+    not_if { not "docker inspect #{iname}" }
   end
 
 end

@@ -30,7 +30,7 @@ ruby_block 'remove WARs not in role' do
           instance = instances_hash[dirname]
           system_str = nil
           if instance == nil
-            splitstr = instance_dir.basename.to_s.split("-_-")
+            splitstr = instance_dir.basename.to_s.split("-__-")
             Chef::Log.warn(splitstr)
             container_name = nil
             docker_image = nil
