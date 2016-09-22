@@ -67,6 +67,6 @@ module ReportHanders
       end
       File.write("/var/log/chef-client_updated.log",message)
     end
-end
-end
+  end
+  end
 end
