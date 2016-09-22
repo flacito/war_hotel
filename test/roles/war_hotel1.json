@@ -202,7 +202,6 @@
       }
     },
     "run_list": [
-        "recipe[war_hotel_test::default]",
         "recipe[war_hotel::default]"
     ]
 }

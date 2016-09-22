@@ -10,6 +10,6 @@ cookbook_file handler_file do
   action :nothing
 end.run_action(:create)
 
- chef_handler "CompanyName::FileHandler" do
+ chef_handler "ReportHanders::WarHotelHandler" do
    source "#{node['chef_handler']['handler_path']}/report_hotel.rb"
  end
